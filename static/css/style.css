@@ -90,6 +90,8 @@ body, html {
 /* Tabs */
 .tab-container {
   margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .tablink {
@@ -105,6 +107,8 @@ body, html {
   transition: all 0.3s ease;
   border-bottom: 3px solid transparent;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  flex: 1;
+  text-align: center;
 }
 
 .tablink:hover {
@@ -126,6 +130,7 @@ body, html {
   box-shadow: var(--box-shadow);
   margin-bottom: 2rem;
   display: none;
+  width: 100%;
 }
 
 .tabcontent.active {
@@ -162,17 +167,69 @@ body, html {
 
 .form-control {
   width: 100%;
-  padding: 12px 15px;
+  padding: 14px 18px;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: var(--border-radius);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  height: auto;
+  min-height: 48px;
+  line-height: 1.5;
 }
 
 .form-control:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
   outline: none;
+}
+
+/* Symptom severity slider */
+.symptom-severity {
+  margin-top: 10px;
+}
+
+.symptom-severity label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: normal;
+}
+
+.severity-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+}
+
+.severity-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+.severity-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+.severity-value {
+  display: inline-block;
+  font-weight: bold;
+  width: 30px;
+  text-align: center;
+}
+
+.symptom-duration {
+  margin-top: 10px;
 }
 
 /* Buttons */
@@ -212,7 +269,7 @@ body, html {
 }
 
 /* Results Card */
-.result-card {
+.result-card, .about-card, .doctor-card {
   background-color: white;
   border-radius: var(--border-radius);
   padding: 30px;
@@ -220,7 +277,7 @@ body, html {
   margin-bottom: 2rem;
 }
 
-.result-title {
+.result-title, .about-title, .doctor-title {
   font-size: 1.5rem;
   color: var(--primary-color);
   margin-bottom: 1rem;
@@ -236,6 +293,29 @@ body, html {
   padding: 15px;
   background-color: rgba(52, 152, 219, 0.1);
   border-radius: var(--border-radius);
+}
+
+/* Disease Information */
+.disease-info {
+  margin-top: 2rem;
+  padding: 20px;
+  background-color: var(--light-color);
+  border-radius: var(--border-radius);
+}
+
+.disease-info h3 {
+  color: var(--dark-color);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.disease-info-section {
+  margin-bottom: 1.5rem;
+}
+
+.disease-info-section:last-child {
+  margin-bottom: 0;
 }
 
 /* Maps */
@@ -264,6 +344,101 @@ body, html {
   padding: 15px;
 }
 
+/* About Page */
+.about-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.about-section:last-child {
+  border-bottom: none;
+}
+
+.about-section h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.about-section ul {
+  padding-left: 2rem;
+}
+
+.about-section li {
+  margin-bottom: 0.5rem;
+}
+
+.disclaimer {
+  padding: 15px;
+  background-color: rgba(231, 76, 60, 0.1);
+  border-left: 4px solid var(--danger-color);
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+/* Doctor Finder Improvements */
+.doctor-filters {
+  margin-bottom: 1.5rem;
+  padding: 15px;
+  background-color: var(--light-color);
+  border-radius: var(--border-radius);
+}
+
+.filter-group {
+  margin-bottom: 1rem;
+}
+
+.filter-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-option {
+  padding: 8px 15px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-option:hover {
+  border-color: var(--primary-color);
+}
+
+.filter-option.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.map-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.radius-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radius-value {
+  font-weight: bold;
+  min-width: 40px;
+}
+
 /* Footer */
 .footer {
   background-color: var(--dark-color);
@@ -274,6 +449,25 @@ body, html {
 }
 
 /* Responsive design */
+@media (max-width: 992px) {
+  .map-container {
+    height: 400px;
+  }
+  
+  .map-options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .filter-options {
+    flex-direction: column;
+  }
+  
+  .filter-option {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .site-title {
     font-size: 2rem;
@@ -290,5 +484,51 @@ body, html {
   
   .nav-links li a {
     text-align: center;
+  }
+  
+  .logo-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .logo {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .disease-name {
+    font-size: 1.5rem;
+  }
+  
+  .result-card, .about-card, .doctor-card {
+    padding: 20px 15px;
+  }
+  
+  .map-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header {
+    padding: 1rem 0;
+  }
+  
+  .site-title {
+    font-size: 1.5rem;
+  }
+  
+  .tablink {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .about-section h2 {
+    font-size: 1.3rem;
   }
 } 

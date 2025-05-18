@@ -1,0 +1,66 @@
+{% include 'includes/default.html' %}
+
+{% block body %}
+<div class="container-fluid px-0">
+  <!-- Header and Navigation from default.html will be included here -->
+  
+  <!-- Main Content -->
+  <main class="container">
+    <div class="about-card">
+      <div class="about-title">
+        <i class="fas fa-info-circle"></i> About Health Checkup
+      </div>
+      
+      <div class="about-section">
+        <h2><i class="fas fa-laptop-medical"></i> Our System</h2>
+        <p>The Health Checkup Disease Prediction System uses state-of-the-art machine learning algorithms to identify potential health conditions based on symptoms you provide. Our goal is to help you make more informed decisions about seeking appropriate medical care.</p>
+        
+        <p>This system employs a decision tree-based machine learning model that has been trained on a comprehensive dataset of disease-symptom relationships. The algorithm analyzes the combinations of symptoms you input and calculates the likelihood of various diseases based on these patterns.</p>
+      </div>
+      
+      <div class="about-section">
+        <h2><i class="fas fa-database"></i> Data Sources</h2>
+        <p>Our prediction model is trained using carefully curated medical datasets that include:</p>
+        <ul>
+          <li>Clinical databases of symptom-disease relationships</li>
+          <li>Medical literature and research papers</li>
+          <li>Anonymized patient records (where available and ethically sourced)</li>
+        </ul>
+        <p>The dataset has been reviewed by healthcare professionals to ensure accuracy and relevance.</p>
+      </div>
+      
+      <div class="about-section">
+        <h2><i class="fas fa-exclamation-triangle"></i> Limitations</h2>
+        <p>While our system provides valuable insights, it's important to understand its limitations:</p>
+        <ul>
+          <li><strong>Not a Substitute for Professional Care:</strong> This tool is designed to provide informational guidance only and should never replace consultation with qualified healthcare professionals.</li>
+          <li><strong>Accuracy Limitations:</strong> The system makes predictions based on reported symptoms, which may not capture the full complexity of your condition.</li>
+          <li><strong>No Physical Examination:</strong> Unlike a doctor, our system cannot perform physical examinations or diagnostic tests that may be crucial for accurate diagnosis.</li>
+          <li><strong>Limited Symptom Input:</strong> The system relies on a predefined set of symptoms and cannot account for all possible health indicators.</li>
+        </ul>
+        <p class="disclaimer">Always consult with a healthcare professional for proper diagnosis and treatment. In case of emergency, contact your local emergency services immediately.</p>
+      </div>
+      
+      <div class="about-section">
+        <h2><i class="fas fa-code"></i> Technical Implementation</h2>
+        <p>The Health Checkup Disease Prediction System is built using:</p>
+        <ul>
+          <li>Python for backend processing and machine learning</li>
+          <li>Flask web framework for the application server</li>
+          <li>Decision tree-based machine learning algorithms for disease prediction</li>
+          <li>HTML5, CSS3, and JavaScript for the user interface</li>
+          <li>Google Maps API for doctor location services</li>
+        </ul>
+      </div>
+      
+      <div class="mt-4 text-center">
+        <a href="/" class="btn btn-primary">
+          <i class="fas fa-home"></i> Return to Home
+        </a>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Footer from default.html will be included here -->
+</div>
+{% endblock %} 

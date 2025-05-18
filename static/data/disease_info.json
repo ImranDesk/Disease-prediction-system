@@ -1,0 +1,137 @@
+{
+    "Common Cold": {
+        "description": "The common cold is a viral infection of your nose and throat (upper respiratory tract). It's usually harmless, although it might not feel that way. Many types of viruses can cause a common cold.",
+        "symptoms": [
+            "Runny or stuffy nose",
+            "Sore throat",
+            "Cough",
+            "Congestion",
+            "Slight body aches",
+            "Mild headache",
+            "Sneezing",
+            "Low-grade fever",
+            "Generally feeling unwell"
+        ],
+        "treatments": [
+            "Rest",
+            "Stay hydrated",
+            "Use over-the-counter cold medications",
+            "Gargle with salt water",
+            "Use saline nasal drops",
+            "Take pain relievers"
+        ],
+        "prevention": [
+            "Wash your hands frequently",
+            "Avoid close contact with sick people",
+            "Don't touch your face with unwashed hands",
+            "Clean frequently touched surfaces",
+            "Strengthen your immune system"
+        ]
+    },
+    "Pneumonia": {
+        "description": "Pneumonia is an infection that inflames the air sacs in one or both lungs. The air sacs may fill with fluid or pus, causing cough with phlegm or pus, fever, chills, and difficulty breathing.",
+        "symptoms": [
+            "Chest pain when breathing or coughing",
+            "Confusion (in older people)",
+            "Cough with phlegm",
+            "Fatigue",
+            "Fever, sweating and shaking chills",
+            "Lower than normal body temperature (in older people)",
+            "Nausea, vomiting or diarrhea",
+            "Shortness of breath"
+        ],
+        "treatments": [
+            "Antibiotics for bacterial pneumonia",
+            "Cough medicine",
+            "Fever reducers/pain relievers",
+            "Hospitalization for severe cases"
+        ],
+        "prevention": [
+            "Vaccination",
+            "Good hygiene practices",
+            "Avoid smoking",
+            "Keep your immune system strong",
+            "Avoid close contact with sick people"
+        ]
+    },
+    "Diabetes": {
+        "description": "Diabetes is a disease that occurs when your blood glucose (blood sugar) is too high. Blood glucose is your main source of energy and comes from the food you eat. Insulin, a hormone made by the pancreas, helps glucose get into your cells to be used for energy.",
+        "symptoms": [
+            "Increased thirst",
+            "Frequent urination",
+            "Extreme hunger",
+            "Unexplained weight loss",
+            "Fatigue",
+            "Irritability",
+            "Blurred vision",
+            "Slow-healing sores",
+            "Frequent infections"
+        ],
+        "treatments": [
+            "Insulin therapy",
+            "Blood sugar monitoring",
+            "Healthy eating",
+            "Regular exercise",
+            "Medication",
+            "Weight loss if overweight"
+        ],
+        "prevention": [
+            "Eat healthy foods",
+            "Get more physical activity",
+            "Lose excess weight",
+            "Quit smoking",
+            "Limit alcohol intake"
+        ]
+    },
+    "Malaria": {
+        "description": "Malaria is a disease caused by a parasite that is transmitted to people through the bites of infected female Anopheles mosquitoes. It is preventable and curable.",
+        "symptoms": [
+            "Fever",
+            "Chills",
+            "Headache",
+            "Nausea and vomiting",
+            "Muscle pain and fatigue",
+            "Sweating",
+            "Chest or abdominal pain",
+            "Cough"
+        ],
+        "treatments": [
+            "Antimalarial drugs",
+            "Supportive care",
+            "Hydration",
+            "Rest"
+        ],
+        "prevention": [
+            "Use insect repellent",
+            "Cover exposed skin",
+            "Sleep under an insecticide-treated mosquito net",
+            "Indoor residual spraying",
+            "Antimalarial medications for travelers"
+        ]
+    },
+    "Hypertension": {
+        "description": "Hypertension, also known as high blood pressure, is a long-term medical condition in which the blood pressure in the arteries is persistently elevated.",
+        "symptoms": [
+            "Most people have no symptoms",
+            "Some may experience headaches",
+            "Shortness of breath",
+            "Nosebleeds",
+            "Visual changes",
+            "Dizziness"
+        ],
+        "treatments": [
+            "Blood pressure medications",
+            "Lifestyle changes",
+            "Regular monitoring"
+        ],
+        "prevention": [
+            "Maintain a healthy weight",
+            "Regular physical activity",
+            "Healthy diet low in sodium",
+            "Limit alcohol",
+            "No smoking",
+            "Manage stress",
+            "Regular health screenings"
+        ]
+    }
+}

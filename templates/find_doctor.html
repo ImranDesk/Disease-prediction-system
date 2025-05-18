@@ -11,7 +11,50 @@
         <i class="fas fa-map-marked-alt"></i> Doctors & Hospitals Near: {{ location }}
       </div>
       
+      <div class="map-options">
+        <div>
+          <strong>Filters Applied:</strong>
+          <span class="badge badge-primary">
+            {{ 'Any Specialty' if not specialty else specialty | title }}
+          </span>
+          <span class="badge badge-info">
+            {{ 'Any Rating' if min_rating == '0' else min_rating + '+ Stars' }}
+          </span>
+          <span class="badge badge-secondary">
+            {{ radius }} meter radius
+          </span>
+        </div>
+        
+        <a href="/" class="btn btn-outline-primary btn-sm">
+          <i class="fas fa-filter"></i> Modify Search
+        </a>
+      </div>
+      
       <div class="map-container" id="gmap_canvas"></div>
+      
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-header bg-primary text-white">
+              <i class="fas fa-hospital"></i> Top Hospitals Nearby
+            </div>
+            <ul class="list-group list-group-flush" id="hospitalsList">
+              <li class="list-group-item text-center">Loading nearby hospitals...</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="card mb-3">
+            <div class="card-header bg-success text-white">
+              <i class="fas fa-user-md"></i> Top Doctors Nearby
+            </div>
+            <ul class="list-group list-group-flush" id="doctorsList">
+              <li class="list-group-item text-center">Loading nearby doctors...</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       
       <div class="mt-4 text-center">
         <a href="/" class="btn btn-primary">
@@ -23,6 +66,9 @@
     <!-- Hidden fields for map initialization -->
     <input type="hidden" id="lat" name="lat" value="18.9682846" />
     <input type="hidden" id="lng" name="lng" value="72.8311396" />
+    <input type="hidden" id="specialty" name="specialty" value="{{ specialty }}" />
+    <input type="hidden" id="min_rating" name="min_rating" value="{{ min_rating }}" />
+    <input type="hidden" id="search_radius" name="search_radius" value="{{ radius }}" />
   </main>
   
   <!-- Footer from default.html will be included here -->
@@ -34,6 +80,8 @@
   var map;
   var markers = Array();
   var infos = Array();
+  var hospitalsList = [];
+  var doctorsList = [];
   
   function initialize() {
     // prepare Geocoder
@@ -119,48 +167,91 @@
     // prepare variables (filter)
     var lat = document.getElementById('lat').value;
     var lng = document.getElementById('lng').value;
+    var radius = parseInt(document.getElementById('search_radius').value);
+    var specialty = document.getElementById('specialty').value;
+    var minRating = parseFloat(document.getElementById('min_rating').value);
+    
     var cur_location = new google.maps.LatLng(lat, lng);
+    
+    // Clear previous lists
+    hospitalsList = [];
+    doctorsList = [];
+    
     // prepare request to Places
-    var request = {
+    var hospitalRequest = {
       location: cur_location,
-      radius: 2000,
-      types: ['hospital', 'doctor']
+      radius: radius,
+      type: 'hospital'
     };
     
-    // send request
+    var doctorRequest = {
+      location: cur_location,
+      radius: radius,
+      keyword: specialty ? specialty : 'doctor'
+    };
+    
+    // send request for hospitals
     service = new google.maps.places.PlacesService(map);
-    service.search(request, createMarkers);
+    service.nearbySearch(hospitalRequest, function(results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        processResults(results, 'hospital', minRating);
+      }
+      
+      // send request for doctors
+      service.nearbySearch(doctorRequest, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          processResults(results, 'doctor', minRating);
+        }
+        
+        // Update the UI with found places
+        updatePlacesLists();
+      });
+    });
   }
   
-  // create markers (from 'findPlaces' function)
-  function createMarkers(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      // if we have found something - clear map (overlays)
-      clearOverlays();
-      // and create new markers by search result
-      for (var i = 0; i < results.length; i++) {
-        createMarker(results[i]);
+  // Process search results and create markers
+  function processResults(results, type, minRating) {
+    for (var i = 0; i < results.length; i++) {
+      var place = results[i];
+      
+      // Skip places with ratings below minimum
+      if (place.rating && place.rating < minRating) {
+        continue;
       }
-    } else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-      alert('Sorry, nothing is found');
+      
+      // Create marker
+      createMarker(place, type);
+      
+      // Add to appropriate list
+      if (type === 'hospital') {
+        hospitalsList.push(place);
+      } else {
+        doctorsList.push(place);
+      }
     }
   }
   
   // create single marker function
-  function createMarker(obj) {
+  function createMarker(obj, type) {
     // prepare new Marker object
     var mark = new google.maps.Marker({
       position: obj.geometry.location,
       map: map,
       title: obj.name,
-      animation: google.maps.Animation.DROP
+      animation: google.maps.Animation.DROP,
+      icon: {
+        url: type === 'hospital' ? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png' : 'https://maps.google.com/mapfiles/ms/icons/green-dot.png'
+      }
     });
     markers.push(mark);
     // prepare info window
     var infowindow = new google.maps.InfoWindow({
-      content: '<div style="color:#000;"><strong>' + obj.name + '</strong>' +
-      '<br>Rating: ' + (obj.rating ? obj.rating + '/5' : 'N/A') +
-      '<br>Address: ' + obj.vicinity + '</div>'
+      content: '<div style="color:#000;">' +
+        '<h5><strong>' + obj.name + '</strong></h5>' +
+        (obj.rating ? '<div>Rating: ' + obj.rating + '/5 (' + (obj.user_ratings_total || 0) + ' reviews)</div>' : '') +
+        '<div>Address: ' + (obj.vicinity || 'Not available') + '</div>' +
+        (obj.opening_hours ? '<div>' + (obj.opening_hours.open_now ? '<span style="color:green">Open now</span>' : '<span style="color:red">Closed</span>') + '</div>' : '') +
+        '</div>'
     });
     // add event handler to current marker
     google.maps.event.addListener(mark, 'click', function() {
@@ -168,6 +259,52 @@
       infowindow.open(map, mark);
     });
     infos.push(infowindow);
+  }
+  
+  // Update places lists in the UI
+  function updatePlacesLists() {
+    var hospitalsListElement = document.getElementById('hospitalsList');
+    var doctorsListElement = document.getElementById('doctorsList');
+    
+    // Sort by rating
+    hospitalsList.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    doctorsList.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    
+    // Update hospitals list
+    if (hospitalsList.length > 0) {
+      hospitalsListElement.innerHTML = '';
+      for (var i = 0; i < Math.min(5, hospitalsList.length); i++) {
+        var hospital = hospitalsList[i];
+        hospitalsListElement.innerHTML += '<li class="list-group-item">' +
+          '<div class="d-flex justify-content-between align-items-center">' +
+          '<div><strong>' + hospital.name + '</strong>' + 
+          (hospital.rating ? '<br><small>Rating: ' + hospital.rating + '/5 (' + (hospital.user_ratings_total || 0) + ' reviews)</small>' : '') +
+          '</div>' +
+          '<span class="badge badge-primary badge-pill">' + (i + 1) + '</span>' +
+          '</div>' +
+          '</li>';
+      }
+    } else {
+      hospitalsListElement.innerHTML = '<li class="list-group-item">No hospitals found nearby</li>';
+    }
+    
+    // Update doctors list
+    if (doctorsList.length > 0) {
+      doctorsListElement.innerHTML = '';
+      for (var i = 0; i < Math.min(5, doctorsList.length); i++) {
+        var doctor = doctorsList[i];
+        doctorsListElement.innerHTML += '<li class="list-group-item">' +
+          '<div class="d-flex justify-content-between align-items-center">' +
+          '<div><strong>' + doctor.name + '</strong>' + 
+          (doctor.rating ? '<br><small>Rating: ' + doctor.rating + '/5 (' + (doctor.user_ratings_total || 0) + ' reviews)</small>' : '') +
+          '</div>' +
+          '<span class="badge badge-success badge-pill">' + (i + 1) + '</span>' +
+          '</div>' +
+          '</li>';
+      }
+    } else {
+      doctorsListElement.innerHTML = '<li class="list-group-item">No doctors found nearby</li>';
+    }
   }
   
   // initialization

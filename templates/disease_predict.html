@@ -17,6 +17,79 @@
           {{ disease[0] }}
         </div>
         
+        <!-- Symptoms Provided -->
+        <div class="mt-4 mb-4">
+          <h3 class="mb-3"><i class="fas fa-list-ul"></i> Symptoms You Reported</h3>
+          <div class="row justify-content-center">
+            {% for symptom in selected_symptoms %}
+            <div class="col-md-4 mb-2">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ symptom }}</h5>
+                  {% if symptom_details[symptom] %}
+                  <p class="card-text">
+                    <strong>Severity:</strong> {{ symptom_details[symptom].severity }}/10
+                    {% if symptom_details[symptom].duration %}
+                    <br>
+                    <strong>Duration:</strong> {{ symptom_details[symptom].duration }}
+                    {% endif %}
+                  </p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <!-- Disease Information -->
+        <div class="disease-info">
+          <h3><i class="fas fa-info-circle"></i> About {{ disease[0] }}</h3>
+          
+          <div class="disease-info-section">
+            <h4><i class="fas fa-file-medical"></i> Description</h4>
+            <p>{{ disease_info.description }}</p>
+          </div>
+          
+          {% if disease_info.symptoms %}
+          <div class="disease-info-section">
+            <h4><i class="fas fa-thermometer"></i> Common Symptoms</h4>
+            <ul class="list-group list-group-flush">
+              {% for symptom in disease_info.symptoms %}
+              <li class="list-group-item">{{ symptom }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          
+          {% if disease_info.treatments %}
+          <div class="disease-info-section">
+            <h4><i class="fas fa-medkit"></i> Treatment Options</h4>
+            <ul class="list-group list-group-flush">
+              {% for treatment in disease_info.treatments %}
+              <li class="list-group-item">{{ treatment }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          
+          {% if disease_info.prevention %}
+          <div class="disease-info-section">
+            <h4><i class="fas fa-shield-alt"></i> Prevention Tips</h4>
+            <ul class="list-group list-group-flush">
+              {% for prevention in disease_info.prevention %}
+              <li class="list-group-item">{{ prevention }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+        
+        <!-- Disclaimer -->
+        <div class="alert alert-warning mt-4" role="alert">
+          <i class="fas fa-exclamation-triangle"></i> <strong>Medical Disclaimer:</strong> This is not a medical diagnosis. Please consult a healthcare professional for proper medical advice and treatment.
+        </div>
+        
         <div class="mt-4">
           <a href="/" class="btn btn-primary">
             <i class="fas fa-arrow-left"></i> Check Again
