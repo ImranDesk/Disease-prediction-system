@@ -63,9 +63,7 @@ with open('templates/Testing.csv', newline='') as f:
 def dropdown():
         return render_template('includes/default.html', symptoms=symptoms)
 
-@app.route('/about', methods=['GET'])
-def about():
-        return render_template('about.html', symptoms=symptoms)
+
 
 @app.route('/disease_predict', methods=['POST'])
 def disease_predict():

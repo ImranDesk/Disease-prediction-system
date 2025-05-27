@@ -21,7 +21,16 @@
   
   <!-- Google Maps API -->
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+  <!-- 
+    To fix the Google Maps loading error:
+    1. Go to https://console.cloud.google.com/
+    2. Create a new project or select existing one
+    3. Enable Maps JavaScript API and Places API
+    4. Create credentials (API key)
+    5. Replace YOUR_API_KEY below with your new API key
+  -->
+    
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAX_LSdk6BNZUcEy1WoKAs9dtkXFoop-Mk&libraries=places"></script>
 </head>
 <body>
   {% block body %}
@@ -41,7 +50,7 @@
       <div class="container">
         <ul class="nav-links">
           <li><a href="/" class="active"><i class="fas fa-hospital"></i> Hospital</a></li>
-          <li><a href="/about"><i class="fas fa-info-circle"></i> About Us</a></li>
+       
         </ul>
       </div>
     </nav>
